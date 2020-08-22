@@ -8,10 +8,10 @@ import dash_table
 import plotly.express as px
 
 #### ----- Step 1 (import data)----
-date_wise_total_csv = pd.read_csv("E:\Study\sem7\BDAD\Covid-19\data\date_wise_totals.csv")
-latest_stat = pd.read_csv("E:\Study\sem7\BDAD\Covid-19\data\latest_stats.csv")
+date_wise_total_csv = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\date_wise_totals.csv")
+latest_stat = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\latest_stats.csv")
 
-stat_date_wise = pd.read_csv("E:\Study\sem7\BDAD\Covid-19\data\state_date_wise2.csv")
+stat_date_wise = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\state_date_wise2.csv")
 #stock = pd.read_csv("E:\Study\sem7\BDAD\stockMarket\HUL_Stock.csv")
 #### ----- Step 2 (Plot data)----
 
