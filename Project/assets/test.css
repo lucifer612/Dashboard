@@ -64,42 +64,23 @@ display:flex;
 
 .pie_and_line_chart{
 float:left;	
-width:650px;	
+width:50%;	
 height:400px;
-padding:10px;
+
 }
 
 .mini_container {
   border-radius: 10px;
   background-color: #f9f9f9;
   margin: 10px;
-padding-left:15px;
-padding-right:15px;
+  padding-left:15px;
+  padding-right:15px;
+  width:25%;
+  text-align:center;
   position: relative;
   box-shadow: 2px 2px 2px lightgrey;
+  text-align: center;
 }
 .container-display {
     display: flex;
   }
-
-.sample_graph{
-margin-top: 10px;
-position: relative; 
-width: 650px; 
-height: 350px;
-#background: #e7e8ff;
-padding:20px;
-#border-radius: 20px;
-#margin-left : 150px;
-}
-
-.sample_graph_2{
-margin-top: 10px;
-position: relative; 
-width: 650px; 
-height: 350px;
-#background: #e7e8ff;
-padding:20px;
-#border-radius: 20px;
-#margin-left : 150px;
-}
