@@ -10,15 +10,9 @@ import plotly.express as px
 #### ----- Step 1 (import data)----
 date_wise_total_csv = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\date_wise_totals.csv")
 latest_stat = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\latest_stats.csv")
-
+stock_data = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\data.csv")
+reliance_data = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\RELIANCE.NS.csv")
 stat_date_wise = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\state_date_wise2.csv")
-# stock = pd.read_csv("E:\Study\sem7\BDAD\stockMarket\HUL_Stock.csv")
-#### ----- Step 2 (Plot data)----
-
-# Plot column 'Confirmed'
-fig1 = px.bar(date_wise_total_csv, x='Day', y='TotalConfirmed', title="Covid Confirmed Cases")
-fig2 = px.bar(date_wise_total_csv, x='Day', y='Deaths', title="Covid Death Cases")
-
 
 def sum_of_confirmed_cases():
     # Safely reassign the filter to a new variable
@@ -74,9 +68,9 @@ app.layout = html.Div([
     # body
 
     html.Div([
-        dcc.Tabs(id='tabs', value='covid' , children=[
+        dcc.Tabs(id='tabs', value='covid', children=[
             dcc.Tab(label='covid', value='covid'),
-            dcc.Tab(label='Stock Market', value='stock market'),
+            dcc.Tab(label='Stock Market', value='stock_market'),
             dcc.Tab(label='Insights', value='insights'),
         ]),
         html.Div(id='tabs-content')
@@ -87,15 +81,16 @@ app.layout = html.Div([
 @app.callback(
     [Output('linechart', 'figure'),
      Output('piechart', 'figure'),
-     Output('barchart', 'figure'),],
+     Output('barchart', 'figure'), ],
     [Input('datatable_id', 'selected_rows'),
      Input('piedropdown', 'value'),
      Input('linedropdown', 'value'),
      Input('bardropdown', 'value')]
 )
-def update_data(chosen_rows, piedropval, linedropval,bardropval):
+def update_data(chosen_rows, piedropval, linedropval, bardropval):
     if len(chosen_rows) == 0:
-        df_filterd = latest_stat[latest_stat['Location'].isin(['Kerala', 'Gujarat', 'Punjab' , 'Manipur' , 'Arunachal Pradesh', 'Chandigarh'])]
+        df_filterd = latest_stat[
+            latest_stat['Location'].isin(['Kerala', 'Gujarat', 'Punjab', 'Manipur', 'Arunachal Pradesh', 'Chandigarh'])]
     else:
         print(chosen_rows)
         df_filterd = latest_stat[latest_stat.index.isin(chosen_rows)]
@@ -130,8 +125,10 @@ def update_data(chosen_rows, piedropval, linedropval,bardropval):
     )
     # line_chart.update_layout(uirevision='foo')
 
-    return (pie_chart, line_chart , bar_chart)
+    return (pie_chart, line_chart, bar_chart)
 
+
+# line_chart.update_layout(uirevision='foo')
 
 #
 # @app.callback(
@@ -270,13 +267,16 @@ def render_content(tab):
                                           clearable=False
                                           ),
                              html.Div([
-                                 dcc.Graph(id='barchart'),
+                                 html.Div([
+                                     dcc.Graph(id='barchart'),
+
+                                 ])
                              ]),
                          ]),
                          ),
             ]),
         ])
-    elif tab == 'stock market':
+    elif tab == 'stock_market':
         return html.Div([
             # # for stock market
             html.Div([
@@ -285,47 +285,22 @@ def render_content(tab):
                              html.H2("Stock Market Data"),
                          ])
                          ),
-                #     #       html.Div(className="latest_stat",
-                #     #                  children=html.Div([
-                #     dash_table.DataTable(
-                #         id='datatable_id2',
-                #         data=stat_date_wise.to_dict('records'),
-                #         columns=[
-                #             {"name": i, "id": i, "deletable": False, "selectable": False} for i in stat_date_wise.columns
-                #         ],
-                #         editable=False,
-                #         sort_action="native",
-                #         sort_mode="multi",
-                #         row_selectable="multi",
-                #         row_deletable=False,
-                #         selected_rows=[],
-                #         # page_action="native",
-                #         # page_current= 0,
-                #         # page_size= 6,
-                #         # page_action='none',
-                #         style_table={
-                #             'maxHeight': '35ex',
-                #             'overflowY': 'scroll',
-                #             'width': '100%',
-                #             'minWidth': '100%',
-                #         },
-                #         fixed_rows={'headers': True, 'data': 0},
-                #         virtualization=True,
-                #         # style_cell_conditional=[
-                #         #     {'if': {'column_id': 'Location'},
-                #         #     'width': '10%', 'textAlign': 'left'},
-                #         #    {'if': {'column_id': 'Deaths'},
-                #         #     'width': '30%', 'textAlign': 'left'},
-                #         #   {'if': {'column_id': 'cases'},
-                #         #     'width': '30%', 'textAlign': 'left'},
-                #         #   ],
-                #     )
+                html.Div(
+                    dcc.Graph(
+                        figure=px.line(stock_data, x="Date", y="Open" , title = 'NIFTY Open Data'))
+
+                ),
+                dcc.Graph(
+                    figure=px.line(reliance_data, x="Date", y="Open" ,title='Reliance Stock Open Data' )
+
+            )
+
             ])
 
         ])
     elif tab == 'insights':
         return html.Div([
-            html.H3('Insights')
+            html.H3('Insights'),
         ])
 
 
