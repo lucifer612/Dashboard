@@ -4,15 +4,15 @@ import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
 import dash_table
-# import dash_bootstrap_components as dbc
 import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
-#### ----- Step 1 (import data)----
-date_wise_total_csv = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\date_wise_totals.csv")
-latest_stat = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\latest_stats.csv")
-stock_data = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\data.csv")
-reliance_data = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\RELIANCE.NS.csv")
-stat_date_wise = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\state_date_wise2.csv")
+date_wise_total_csv = pd.read_csv(".\..\data\date_wise_totals.csv")
+latest_stat = pd.read_csv(".\..\data\latest_stats.csv")
+stock_data = pd.read_csv(".\..\data\data.csv")
+reliance_data = pd.read_csv(".\..\data\RELIANCE.NS.csv")
+stat_date_wise = pd.read_csv(".\..\data\state_date_wise2.csv")
 
 def sum_of_confirmed_cases():
     # Safely reassign the filter to a new variable
@@ -37,9 +37,28 @@ def sum_of_discharged():
     total_discharged = sum(latest_stat['Discharged'])
     return total_discharged
 
+fig = make_subplots(specs=[[{"secondary_y": True}]])
+fig.add_trace(
+    go.Scatter(x=stat_date_wise['Day'], y=stat_date_wise['TotalConfirmed'], name="total confirmed data"),
+    secondary_y=False,
+)
+fig.add_trace(
+    go.Scatter(x=stock_data['Date'], y=stock_data['Open'], name="reliance stock open data"),
+    secondary_y=True,
+)
+# Add figure title
+# fig.update_layout(
+#     title_text="stock open date and total confirmed cases"
+# )
 
-# stylesheet = 'https://codepen.io/chriddyp/pen/bWLwgP.css'
-# app = dash.Dash(__name__, external_stylesheets=stylesheet)
+# # Set x-axis title
+# fig.update_xaxes(title_text="time series")
+
+# # Set y-axes titles
+# fig.update_yaxes(title_text="<b>confirmed</b> cases", secondary_y=False)
+# fig.update_yaxes(title_text="<b>stock</b> date ", secondary_y=True)
+
+
 app = dash.Dash(__name__)
 app.layout = html.Div([
     html.Link(
@@ -153,7 +172,7 @@ def render_content(tab):
             html.Div([
                 html.Div(
                     children=html.Div([
-                        html.H2("COVID-19 Data"),
+                        html.H3("Current India's COVID-19 Data"),
                     ])
                 ),
                 html.Div([html.Div([
@@ -215,12 +234,17 @@ def render_content(tab):
                             virtualization=True,
                             style_cell_conditional=[
                                 {'if': {'column_id': 'Location'},
-                                 'width': '10%'},
+                                 'width': '25%',
+                                 'text-align': 'left'},
+                                   {'if': {'column_id': 'TotalConfirmed'},
+                                    'width': '20%', 'textAlign': 'left'},
+                                   {'if': {'column_id': 'Deaths'},
+                                    'width': '20%', 'textAlign': 'left'},
+                                   {'if': {'column_id': 'Discharged'},
+                                    'width': '20%', 'textAlign': 'left'},
+                                   {'if': {'column_id': 'Active'},
+                                    'width':  '15%', 'textAlign': 'left'},
 
-                                #    {'if': {'column_id': 'Deaths'},
-                                #     'width': '30%', 'textAlign': 'left'},
-                                #   {'if': {'column_id': 'cases'},
-                                #     'width': '30%', 'textAlign': 'left'},
                             ],
                         )
                     ])
@@ -239,7 +263,7 @@ def render_content(tab):
                              html.Div([
                                  dcc.Graph(id='piechart'),
                              ]),
-                         ]),
+                         ],className="covid_line_graph_dropdown_1"),
                          ),
                 html.Div(className="pie_and_line_chart",
                          children=html.Div([
@@ -273,17 +297,17 @@ def render_content(tab):
                                  ])
                              ]),
                          ]),
-                         ),
+                    ),
             ]),
         ])
     elif tab == 'stock_market':
         return html.Div([
             # # for stock market
             html.Div([
-                html.Div(className="column",
+                html.Div(
                          children=html.Div([
-                             html.H2("Stock Market Data"),
-                         ])
+                             html.H3("Stock Market Data"),
+                         ],id = 'stock_market_data_heading')
                          ),
                 html.Div(
                     dcc.Graph(
@@ -293,16 +317,21 @@ def render_content(tab):
                 dcc.Graph(
                     figure=px.line(reliance_data, x="Date", y="Open" ,title='Reliance Stock Open Data' )
 
-            )
-
+                )
             ])
-
         ])
     elif tab == 'insights':
         return html.Div([
-            html.H3('Insights'),
+            html.Div(children = html.Div([
+                html.H3('Insights'),
+            ],id='insights'),
+            ),
+            html.Div(
+                dcc.Graph(
+                    figure=fig
+                )
+            )
         ])
-
 
 if __name__ == "__main__":
     app.run_server(debug=False)
