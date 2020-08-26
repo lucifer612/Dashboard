@@ -4,15 +4,17 @@ import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
 import dash_table
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 # import dash_bootstrap_components as dbc
 import plotly.express as px
 
 #### ----- Step 1 (import data)----
-date_wise_total_csv = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\date_wise_totals.csv")
-latest_stat = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\latest_stats.csv")
-stock_data = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\data.csv")
-reliance_data = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\RELIANCE.NS.csv")
-stat_date_wise = pd.read_csv("E:\Study\sem7\BDAD\Dashboard\data\state_date_wise2.csv")
+date_wise_total_csv = pd.read_csv(r"C:\Users\yashs\Documents\GitHub\Dashboard\data\date_wise_totals.csv")
+latest_stat = pd.read_csv(r"C:\Users\yashs\Documents\GitHub\Dashboard\data\latest_stats.csv")
+stock_data = pd.read_csv(r"C:\Users\yashs\Documents\GitHub\Dashboard\data\data.csv")
+reliance_data = pd.read_csv(r"C:\Users\yashs\Documents\GitHub\Dashboard\data\RELIANCE.NS.csv")
+stat_date_wise = pd.read_csv(r"C:\Users\yashs\Documents\GitHub\Dashboard\data\state_date_wise2.csv")
 
 def sum_of_confirmed_cases():
     # Safely reassign the filter to a new variable
@@ -36,6 +38,27 @@ def sum_of_discharged():
     # Safely reassign the filter to a new variable
     total_discharged = sum(latest_stat['Discharged'])
     return total_discharged
+
+fig = make_subplots(specs=[[{"secondary_y": True}]])
+fig.add_trace(
+    go.Scatter(x=stat_date_wise['Day'], y=stat_date_wise['TotalConfirmed'], name="total confirmed data"),
+    secondary_y=False,
+)
+fig.add_trace(
+    go.Scatter(x=stock_data['Date'], y=stock_data['Open'], name="reliance stock open data"),
+    secondary_y=True,
+)
+# Add figure title
+fig.update_layout(
+    title_text="stock open date and total confirmed cases"
+)
+
+# Set x-axis title
+fig.update_xaxes(title_text="time series")
+
+# Set y-axes titles
+fig.update_yaxes(title_text="<b>confirmed</b> cases", secondary_y=False)
+fig.update_yaxes(title_text="<b>stock</b> date ", secondary_y=True)
 
 
 # stylesheet = 'https://codepen.io/chriddyp/pen/bWLwgP.css'
@@ -300,7 +323,15 @@ def render_content(tab):
         ])
     elif tab == 'insights':
         return html.Div([
-            html.H3('Insights'),
+            html.Div(children = html.Div([
+                html.H3('Insights'),
+            ],id='insights'),
+            ),
+            html.Div(
+                dcc.Graph(
+                    figure=fig
+                )
+            )
         ])
 
 
