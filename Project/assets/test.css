@@ -14,17 +14,6 @@ position: absolute;
 
 }
 
-
-#stock_market_data_heading{
-float:center;
-text-align:center;	
-}
-
-#insights{
-	float:right;
-	text-align:right;
-}
-
 .main_header{
 	background: #1f147a;
 	padding-left: 10px;
@@ -50,7 +39,7 @@ text-align:center;
     transform: translateX(0px);
 }
 
-H1,H2,H3{
+H2{
 color: #5454ce;
 }
 
@@ -77,10 +66,7 @@ display:flex;
 float:left;	
 width:50%;	
 height:400px;
-}
 
-.covid_line_graph_dropdown_1{
-padding-top: 30px;
 }
 
 .mini_container {
