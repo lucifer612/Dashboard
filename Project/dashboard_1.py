@@ -13,6 +13,8 @@ latest_stat = pd.read_csv(".\..\data\latest_stats.csv")
 stock_data = pd.read_csv(".\..\data\data.csv")
 reliance_data = pd.read_csv(".\..\data\RELIANCE.NS.csv")
 stat_date_wise = pd.read_csv(".\..\data\state_date_wise2.csv")
+nifty_pharma= pd.read_csv(".\..\data/nifty pharma.csv")
+nifty_it= pd.read_csv(".\..\data/nifty IT.csv")
 
 def sum_of_confirmed_cases():
     # Safely reassign the filter to a new variable
@@ -37,26 +39,75 @@ def sum_of_discharged():
     total_discharged = sum(latest_stat['Discharged'])
     return total_discharged
 
+insights_it = pd.DataFrame()
+insights_it['Day'] = nifty_it['Date']
+insights_it['TotalConfirmed'] = date_wise_total_csv['TotalConfirmed']
+insights_it['Open'] = nifty_it['Open']
+insights_it['Close'] = nifty_it['Close']
+insights_it['High'] = nifty_it['High']
+#insights_it['Low'] = nifty_it['Low']
+
 fig = make_subplots(specs=[[{"secondary_y": True}]])
 fig.add_trace(
-    go.Scatter(x=stat_date_wise['Day'], y=stat_date_wise['TotalConfirmed'], name="total confirmed data"),
+    go.Scatter(x=insights_it['Day'], y=insights_it['TotalConfirmed'], name="total confirmed data"),
     secondary_y=False,
 )
 fig.add_trace(
-    go.Scatter(x=stock_data['Date'], y=stock_data['Open'], name="reliance stock open data"),
+    go.Scatter(x=insights_it['Day'], y=insights_it['Open'], name="nifty IT Open data"),
     secondary_y=True,
 )
-# Add figure title
+fig.add_trace(
+    go.Scatter(x=insights_it['Day'], y=insights_it['Close'], name="nifty IT Close data"),
+    secondary_y=True,
+)
+fig.add_trace(
+    go.Scatter(x=insights_it['Day'], y=insights_it['High'], name="nifty IT High data"),
+    secondary_y=True,
+)
+
+
+# # Add figure title
 # fig.update_layout(
 #     title_text="stock open date and total confirmed cases"
 # )
-
-# # Set x-axis title
+#
+# # # Set x-axis title
 # fig.update_xaxes(title_text="time series")
-
-# # Set y-axes titles
+#
+# # # Set y-axes titles
 # fig.update_yaxes(title_text="<b>confirmed</b> cases", secondary_y=False)
 # fig.update_yaxes(title_text="<b>stock</b> date ", secondary_y=True)
+#
+insights_pharma = pd.DataFrame()
+insights_pharma['Day'] = nifty_pharma['Date']
+insights_pharma['TotalConfirmed'] = date_wise_total_csv['TotalConfirmed']
+insights_pharma['Open'] = nifty_pharma['Open']
+insights_pharma['Low'] = nifty_pharma['Low']
+insights_pharma['High'] = nifty_pharma['High']
+insights_pharma['Close'] = nifty_pharma['Close']
+
+
+fig1 = make_subplots(specs=[[{"secondary_y": True}]])
+fig1.add_trace(
+    go.Scatter(x=insights_pharma['Day'], y=insights_pharma['TotalConfirmed'], name="total confirmed data"),
+    secondary_y=False,
+)
+fig1.add_trace(
+    go.Scatter(x=insights_pharma['Day'], y=insights_pharma['Open'], name="nifty pharma Open data"),
+    secondary_y=True,
+)
+fig1.add_trace(
+    go.Scatter(x=insights_pharma['Day'], y=insights_pharma['Close'], name="nifty pharma Close data"),
+    secondary_y=True,
+)
+fig1.add_trace(
+    go.Scatter(x=insights_pharma['Day'], y=insights_pharma['High'], name="nifty pharma High data"),
+    secondary_y=True,
+)
+fig1.add_trace(
+    go.Scatter(x=insights_pharma['Day'], y=insights_pharma['Low'], name="nifty pharma Low data"),
+    secondary_y=True,
+)
 
 
 app = dash.Dash(__name__)
@@ -329,6 +380,11 @@ def render_content(tab):
             html.Div(
                 dcc.Graph(
                     figure=fig
+                )
+            ),
+            html.Div(
+                dcc.Graph(
+                    figure=fig1
                 )
             )
         ])
