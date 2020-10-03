@@ -49,7 +49,8 @@ insights_it['High'] = nifty_it['High']
 
 fig = make_subplots(specs=[[{"secondary_y": True}]])
 fig.add_trace(
-    go.Scatter(x=insights_it['Day'], y=insights_it['TotalConfirmed'], name="total confirmed data"),
+    go.Scatter(x=insights_it['Day'], y=insights_it['TotalConfirmed'], name="total confirmed data",
+             ),
     secondary_y=False,
 )
 fig.add_trace(
@@ -109,6 +110,41 @@ fig1.add_trace(
     secondary_y=True,
 )
 
+nifty_it_plot = make_subplots(specs=[[{"secondary_y": True}]])
+nifty_it_plot.add_trace(
+    go.Scatter(x=nifty_it['Date'], y=nifty_it['Open'], name="nifty pharma Open data"),
+
+)
+nifty_it_plot.add_trace(
+    go.Scatter(x=nifty_it['Date'], y=nifty_it['Close'], name="nifty pharma Close data"),
+
+)
+nifty_it_plot.add_trace(
+    go.Scatter(x=nifty_it['Date'], y=nifty_it['High'], name="nifty pharma High data"),
+
+)
+nifty_it_plot.add_trace(
+    go.Scatter(x=nifty_it['Date'], y=nifty_it['Low '], name="nifty pharma Low data"),
+
+)
+
+nifty_pharma_plot = make_subplots( specs=[[{"secondary_y": True}]])
+nifty_pharma_plot.add_trace(
+    go.Scatter(x=nifty_pharma['Date'], y=nifty_pharma['Open'], name="nifty pharma Open data"),
+
+)
+nifty_pharma_plot.add_trace(
+    go.Scatter(x=nifty_pharma['Date'], y=nifty_pharma['Close'], name="nifty pharma Close data"),
+
+)
+nifty_pharma_plot.add_trace(
+    go.Scatter(x=nifty_pharma['Date'], y=nifty_pharma['High'], name="nifty pharma High data"),
+
+)
+nifty_pharma_plot.add_trace(
+    go.Scatter(x=nifty_pharma['Date'], y=nifty_pharma['Low'], name="nifty pharma Low data"),
+
+)
 
 app = dash.Dash(__name__)
 app.layout = html.Div([
@@ -363,13 +399,14 @@ def render_content(tab):
                          ),
                 html.Div(
                     dcc.Graph(
-                        figure=px.line(stock_data, x="Date", y="Open" , title = 'NIFTY Open Data'))
-
+                        figure=nifty_it_plot,
+                     ),
                 ),
-                dcc.Graph(
-                    figure=px.line(reliance_data, x="Date", y="Open" ,title='Reliance Stock Open Data' )
-
-                )
+                html.Div(
+                    dcc.Graph(
+                        figure=nifty_pharma_plot,
+                    ),
+                ),
             ])
         ])
     elif tab == 'insights':
