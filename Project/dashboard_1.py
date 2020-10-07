@@ -230,7 +230,7 @@ nifty_it_plot.add_trace(
 
 )
 nifty_it_plot.add_trace(
-    go.Scatter(x=nifty_it['Date'], y=nifty_it['Low '], name="nifty pharma Low data"),
+    go.Scatter(x=nifty_it['Date'], y=nifty_it['Low'], name="nifty pharma Low data"),
 
 )
 
