@@ -65,13 +65,10 @@ fig.add_trace(
     go.Scatter(x=insights_it['Day'], y=insights_it['High'], name="nifty IT High data"),
     secondary_y=True,
 )
+fig.update_layout(
+     title_text= "Nifty IT and Covid-19 Plot"
+)
 
-
-# # Add figure title
-# fig.update_layout(
-#     title_text="stock open date and total confirmed cases"
-# )
-#
 # # # Set x-axis title
 # fig.update_xaxes(title_text="time series")
 #
@@ -108,6 +105,9 @@ fig1.add_trace(
 fig1.add_trace(
     go.Scatter(x=insights_pharma['Day'], y=insights_pharma['Low'], name="nifty pharma Low data"),
     secondary_y=True,
+)
+fig1.update_layout(
+     title_text= "Nifty Pharma and Covid-19 Plot"
 )
 
 nifty_it_plot = make_subplots(specs=[[{"secondary_y": True}]])
@@ -421,11 +421,24 @@ def render_content(tab):
                 )
             ),
             html.Div(
+                html.P(
+                    "Initially covid 19 cases affect the stock prices then gradually increase"
+                )
+            ),
+
+            html.Div(
                 dcc.Graph(
                     figure=fig1
                 )
-            )
+            ),
+
+            html.Div(
+                html.P(
+                    "Initially covid 19 cases affect the stock prices then increase rapidly because need of medicines "
+                )
+            ),
         ])
 
 if __name__ == "__main__":
     app.run_server(debug=False)
+    #app.run_server(host='0.0.0.0', port=5002)
