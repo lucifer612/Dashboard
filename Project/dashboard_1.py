@@ -15,6 +15,9 @@ reliance_data = pd.read_csv(".\..\data\RELIANCE.NS.csv")
 stat_date_wise = pd.read_csv(".\..\data\state_date_wise2.csv")
 nifty_pharma= pd.read_csv(".\..\data/nifty pharma.csv")
 nifty_it= pd.read_csv(".\..\data/nifty IT.csv")
+nifty_fmcg = pd.read_csv(".\..\data/nifty fmcg.csv")
+nifty_auto = pd.read_csv(".\..\data/nifty auto.csv")
+nifty_finserv = pd.read_csv(".\..\data/nifty finserv.csv")
 
 def sum_of_confirmed_cases():
     # Safely reassign the filter to a new variable
@@ -47,25 +50,25 @@ insights_it['Close'] = nifty_it['Close']
 insights_it['High'] = nifty_it['High']
 #insights_it['Low'] = nifty_it['Low']
 
-fig = make_subplots(specs=[[{"secondary_y": True}]])
-fig.add_trace(
+insights_it_graph = make_subplots(specs=[[{"secondary_y": True}]])
+insights_it_graph.add_trace(
     go.Scatter(x=insights_it['Day'], y=insights_it['TotalConfirmed'], name="total confirmed data",
              ),
     secondary_y=False,
 )
-fig.add_trace(
+insights_it_graph.add_trace(
     go.Scatter(x=insights_it['Day'], y=insights_it['Open'], name="nifty IT Open data"),
     secondary_y=True,
 )
-fig.add_trace(
+insights_it_graph.add_trace(
     go.Scatter(x=insights_it['Day'], y=insights_it['Close'], name="nifty IT Close data"),
     secondary_y=True,
 )
-fig.add_trace(
+insights_it_graph.add_trace(
     go.Scatter(x=insights_it['Day'], y=insights_it['High'], name="nifty IT High data"),
     secondary_y=True,
 )
-fig.update_layout(
+insights_it_graph.update_layout(
      title_text= "Nifty IT and Covid-19 Plot"
 )
 
@@ -85,30 +88,133 @@ insights_pharma['High'] = nifty_pharma['High']
 insights_pharma['Close'] = nifty_pharma['Close']
 
 
-fig1 = make_subplots(specs=[[{"secondary_y": True}]])
-fig1.add_trace(
+insights_pharma_graph = make_subplots(specs=[[{"secondary_y": True}]])
+insights_pharma_graph.add_trace(
     go.Scatter(x=insights_pharma['Day'], y=insights_pharma['TotalConfirmed'], name="total confirmed data"),
     secondary_y=False,
 )
-fig1.add_trace(
+insights_pharma_graph.add_trace(
     go.Scatter(x=insights_pharma['Day'], y=insights_pharma['Open'], name="nifty pharma Open data"),
     secondary_y=True,
 )
-fig1.add_trace(
+insights_pharma_graph.add_trace(
     go.Scatter(x=insights_pharma['Day'], y=insights_pharma['Close'], name="nifty pharma Close data"),
     secondary_y=True,
 )
-fig1.add_trace(
+insights_pharma_graph.add_trace(
     go.Scatter(x=insights_pharma['Day'], y=insights_pharma['High'], name="nifty pharma High data"),
     secondary_y=True,
 )
-fig1.add_trace(
+insights_pharma_graph.add_trace(
     go.Scatter(x=insights_pharma['Day'], y=insights_pharma['Low'], name="nifty pharma Low data"),
     secondary_y=True,
 )
-fig1.update_layout(
+insights_pharma_graph.update_layout(
      title_text= "Nifty Pharma and Covid-19 Plot"
 )
+
+insights_fmcg = pd.DataFrame()
+insights_fmcg['Day'] = nifty_fmcg['Date']
+insights_fmcg['TotalConfirmed'] = date_wise_total_csv['TotalConfirmed']
+insights_fmcg['Open'] = nifty_fmcg['Open']
+insights_fmcg['Low'] = nifty_fmcg['Low']
+insights_fmcg['High'] = nifty_fmcg['High']
+insights_fmcg['Close'] = nifty_fmcg['Close']
+
+
+insights_fmcg_graph = make_subplots(specs=[[{"secondary_y": True}]])
+insights_fmcg_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['TotalConfirmed'], name="total confirmed data"),
+    secondary_y=False,
+)
+insights_fmcg_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['Open'], name="nifty FMCG Open data"),
+    secondary_y=True,
+)
+insights_fmcg_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['Close'], name="nifty FMCG Close data"),
+    secondary_y=True,
+)
+insights_fmcg_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['High'], name="nifty FMCG High data"),
+    secondary_y=True,
+)
+insights_fmcg_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['Low'], name="nifty FMCG Low data"),
+    secondary_y=True,
+)
+insights_fmcg_graph.update_layout(
+     title_text= "Nifty FMCG and Covid-19 Plot"
+)
+
+insights_auto = pd.DataFrame()
+insights_auto['Day'] = nifty_auto['Date']
+insights_auto['TotalConfirmed'] = date_wise_total_csv['TotalConfirmed']
+insights_auto['Open'] = nifty_auto['Open']
+insights_auto['Low'] = nifty_auto['Low']
+insights_auto['High'] = nifty_auto['High']
+insights_auto['Close'] = nifty_auto['Close']
+
+
+insights_auto_graph = make_subplots(specs=[[{"secondary_y": True}]])
+insights_auto_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['TotalConfirmed'], name="total confirmed data"),
+    secondary_y=False,
+)
+insights_auto_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['Open'], name="nifty FMCG Open data"),
+    secondary_y=True,
+)
+insights_auto_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['Close'], name="nifty FMCG Close data"),
+    secondary_y=True,
+)
+insights_auto_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['High'], name="nifty FMCG High data"),
+    secondary_y=True,
+)
+insights_auto_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['Low'], name="nifty FMCG Low data"),
+    secondary_y=True,
+)
+insights_auto_graph.update_layout(
+     title_text= "Nifty FMCG and Covid-19 Plot"
+)
+
+insights_finserv = pd.DataFrame()
+insights_finserv['Day'] = nifty_finserv['Date']
+insights_finserv['TotalConfirmed'] = date_wise_total_csv['TotalConfirmed']
+insights_finserv['Open'] = nifty_finserv['Open']
+insights_finserv['Low'] = nifty_finserv['Low']
+insights_finserv['High'] = nifty_finserv['High']
+insights_finserv['Close'] = nifty_finserv['Close']
+
+
+insights_finserv_graph = make_subplots(specs=[[{"secondary_y": True}]])
+insights_finserv_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['TotalConfirmed'], name="total confirmed data"),
+    secondary_y=False,
+)
+insights_finserv_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['Open'], name="nifty FMCG Open data"),
+    secondary_y=True,
+)
+insights_finserv_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['Close'], name="nifty FMCG Close data"),
+    secondary_y=True,
+)
+insights_finserv_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['High'], name="nifty FMCG High data"),
+    secondary_y=True,
+)
+insights_finserv_graph.add_trace(
+    go.Scatter(x=insights_fmcg['Day'], y=insights_fmcg['Low'], name="nifty FMCG Low data"),
+    secondary_y=True,
+)
+insights_finserv_graph.update_layout(
+     title_text= "Nifty FMCG and Covid-19 Plot"
+)
+
 
 nifty_it_plot = make_subplots(specs=[[{"secondary_y": True}]])
 nifty_it_plot.add_trace(
@@ -145,6 +251,64 @@ nifty_pharma_plot.add_trace(
     go.Scatter(x=nifty_pharma['Date'], y=nifty_pharma['Low'], name="nifty pharma Low data"),
 
 )
+
+
+nifty_fmcg_plot = make_subplots( specs=[[{"secondary_y": True}]])
+nifty_fmcg_plot.add_trace(
+    go.Scatter(x=nifty_fmcg['Date'], y=nifty_fmcg['Open'], name="nifty fmcg Open data"),
+
+)
+nifty_fmcg_plot.add_trace(
+    go.Scatter(x=nifty_fmcg['Date'], y=nifty_fmcg['Close'], name="nifty fmcg Close data"),
+
+)
+nifty_fmcg_plot.add_trace(
+    go.Scatter(x=nifty_fmcg['Date'], y=nifty_fmcg['High'], name="nifty fmcg High data"),
+
+)
+nifty_fmcg_plot.add_trace(
+    go.Scatter(x=nifty_fmcg['Date'], y=nifty_fmcg['Low'], name="nifty fmcg Low data"),
+
+)
+
+nifty_auto_plot = make_subplots( specs=[[{"secondary_y": True}]])
+nifty_auto_plot.add_trace(
+    go.Scatter(x=nifty_auto['Date'], y=nifty_auto['Open'], name="nifty auto Open data"),
+
+)
+nifty_auto_plot.add_trace(
+    go.Scatter(x=nifty_auto['Date'], y=nifty_auto['Close'], name="nifty auto Close data"),
+
+)
+nifty_auto_plot.add_trace(
+    go.Scatter(x=nifty_auto['Date'], y=nifty_auto['High'], name="nifty auto High data"),
+
+)
+nifty_auto_plot.add_trace(
+    go.Scatter(x=nifty_auto['Date'], y=nifty_auto['Low'], name="nifty auto Low data"),
+
+)
+
+
+nifty_finserv_plot = make_subplots( specs=[[{"secondary_y": True}]])
+nifty_finserv_plot.add_trace(
+    go.Scatter(x=nifty_finserv['Date'], y=nifty_finserv['Open'], name="nifty finserv Open data"),
+
+)
+nifty_finserv_plot.add_trace(
+    go.Scatter(x=nifty_finserv['Date'], y=nifty_finserv['Close'], name="nifty finserv Close data"),
+
+)
+nifty_finserv_plot.add_trace(
+    go.Scatter(x=nifty_finserv['Date'], y=nifty_finserv['High'], name="nifty finserv High data"),
+
+)
+nifty_finserv_plot.add_trace(
+    go.Scatter(x=nifty_finserv['Date'], y=nifty_finserv['Low'], name="nifty finserv Low data"),
+
+)
+
+
 
 app = dash.Dash(__name__)
 app.layout = html.Div([
@@ -407,6 +571,22 @@ def render_content(tab):
                         figure=nifty_pharma_plot,
                     ),
                 ),
+                html.Div(
+                    dcc.Graph(
+                        figure=nifty_fmcg_plot,
+                    ),
+                ),
+                html.Div(
+                    dcc.Graph(
+                        figure=nifty_auto_plot,
+                    ),
+                ),
+                html.Div(
+                    dcc.Graph(
+                        figure=nifty_finserv_plot,
+                    ),
+                ),
+
             ])
         ])
     elif tab == 'insights':
@@ -417,7 +597,7 @@ def render_content(tab):
             ),
             html.Div(
                 dcc.Graph(
-                    figure=fig
+                    figure=insights_it_graph
                 )
             ),
             html.Div(
@@ -428,7 +608,7 @@ def render_content(tab):
 
             html.Div(
                 dcc.Graph(
-                    figure=fig1
+                    figure=insights_pharma_graph
                 )
             ),
 
@@ -437,6 +617,43 @@ def render_content(tab):
                     "Initially covid 19 cases affect the stock prices then increase rapidly because need of medicines "
                 )
             ),
+
+            html.Div(
+                dcc.Graph(
+                    figure=insights_fmcg_graph
+                )
+            ),
+
+            html.Div(
+                html.P(
+                    "Initially covid 19 cases affect the stock prices then increase rapidly because need of medicines "
+                )
+            ),
+
+            html.Div(
+                dcc.Graph(
+                    figure=insights_auto_graph
+                )
+            ),
+
+            html.Div(
+                html.P(
+                    "Initially covid 19 cases affect the stock prices then increase rapidly because need of medicines "
+                )
+            ),
+
+            html.Div(
+                dcc.Graph(
+                    figure=insights_finserv_graph
+                )
+            ),
+
+            html.Div(
+                html.P(
+                    "Initially covid 19 cases affect the stock prices then increase rapidly because need of medicines "
+                )
+            ),
+
         ])
 
 if __name__ == "__main__":
