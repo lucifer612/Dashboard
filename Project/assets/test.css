@@ -13,7 +13,12 @@ position: absolute;
   right: 0px;
 
 }
+#insights_p{
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-bottom: 50px;
 
+}
 
 #stock_market_data_heading{
 float:center;

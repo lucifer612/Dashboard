@@ -607,7 +607,7 @@ def render_content(tab):
                 html.P(
                     "As we can see just after first few cases of CoVID-19, nifty IT dropped more than 2000 points in 2 weeks."
                     "Just after 2 weeks as the demand for IT services went up, so did the stock of those companies and hence nifty IT gained momentum which led to a new High"
-                )
+                    , id='insights_p')
             ),
 
             html.Div(
@@ -619,7 +619,7 @@ def render_content(tab):
             html.Div(
                 html.P(
                     "When the inital wave of CoVID-19 hit, nifty pharma dropped around 1000 points. But as we know the demand for medicines and medical services spiked and so did the stock, which in just 2 weeks rised more than 2000 points"
-                )
+                    , id='insights_p')
             ),
 
             html.Div(
@@ -632,7 +632,7 @@ def render_content(tab):
                 html.P(
                     "As the first wave of CoVID-19 hit, nifty FMCG dropped approximately 5000 points, just after the lockdown was imposed the demand of consumer goods rised greatly and the stock recovered its previous position within a month."
                     "It wasn't stable though, as we can see it did drop couple 1000 points a few times. Also the stock hasn't gained new highs like that of Nifty IT and Nifty Pharma"
-                )
+                    , id='insights_p')
             ),
 
             html.Div(
@@ -644,7 +644,7 @@ def render_content(tab):
             html.Div(
                 html.P(
                     "The behavior of nifty auto is similar to nifty FMCG, the rise/recovery of nifty auto was because of increase in demand of personal mobility because of the Pandemic"
-                )
+                    , id='insights_p')
             ),
 
             html.Div(
@@ -656,7 +656,7 @@ def render_content(tab):
             html.Div(
                 html.P(
                     "The nifty finserv dipped more than 5000 points during the initial wave and still hasn't recovered fully. The reason being, people are less likely to invest in long term plans,take loans as what comes next is unknown."
-                )
+                , id='insights_p' )
             ),
 
         ])
